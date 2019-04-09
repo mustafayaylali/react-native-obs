@@ -7,7 +7,7 @@ const MainNavigator = createStackNavigator({
   Home: {screen: LoginComponent},
   Profile: {screen: ProfileComponent},
 });
-
+//navigation
 const App = createAppContainer(MainNavigator);
 
 export default App;
