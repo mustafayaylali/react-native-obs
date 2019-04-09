@@ -6,3 +6,4 @@ export const getUserInfo = (name) => {
     return fetch(URL)
             .then((res) => res.json());
 }
+//asdsad
