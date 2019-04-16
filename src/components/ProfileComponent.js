@@ -44,7 +44,7 @@ export default class ProfileComponent extends Component {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableHighlight style={[styles.button, styles.buttonMessage]} onPress={() => this.onClickListener('message')}>
-              <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/48/000000/facebook-like.png' }} />
+              <Image style={styles.icon} source={{ uri: '../../images/dersler.png' }} />
             </TouchableHighlight>
 
             <TouchableHighlight style={[styles.button, styles.buttonLike]} onPress={() => this.onClickListener('like')}>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   box: {
     marginTop: 10,
     borderRadius:70,
-    backgroundColor: '#f2f3f4',
+    backgroundColor: 'rgba(52, 52, 52, 0.1)',
     alignItems: 'center',
     shadowColor: 'black',
     shadowOpacity: .2,
@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
   profileImage: {
-    width: 300,
-    height: 300,
+    width: 100,
+    height: 100,
     marginBottom: 20,
     borderRadius: 200
   },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginBottom: 20,
     fontWeight: 'bold',
-    color: '#1E90FF',
+    color: '#000000',
   },
   buttonContainer: {
     flexDirection: 'row',

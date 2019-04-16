@@ -33,8 +33,8 @@ export default class LoginComponent extends Component {
         this.state = {
             showPass: true,
             press: false,
-            TextInput_Username: '',
-            TextInput_Password: '',
+            TextInput_Username: 'myaylali', //ikiside boş olcak ''
+            TextInput_Password: 'User',
             error: false,
             showAnimation: false
         }
