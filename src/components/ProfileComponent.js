@@ -15,6 +15,8 @@ import {
 
 import bgImage from '../../images/background_profile.jpg'
 import dersler from '../../images/dersler.png'
+import ders_secim from '../../images/ders_secim.png'
+import profil from '../../images/profil.png'
 
 export default class ProfileComponent extends Component {
 
@@ -57,18 +59,24 @@ export default class ProfileComponent extends Component {
 
 
             <TouchableHighlight style={[styles.button, styles.buttonLike]} onPress={() => this.onClickListener('like')}>
-              <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={dersler} />
-                <Text>Abnc</Text>
+            <View style={{ flexDirection: "row" }}>
+                <Image style={styles.icon} source={profil} />
+                <Text style={styles.btnText}> PROFİLİM</Text>
               </View>
             </TouchableHighlight>
 
             <TouchableHighlight style={[styles.button, styles.buttonLove]} onPress={() => this.onClickListener('love')}>
-              <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/48/000000/facebook-like.png' }} />
+            <View style={{ flexDirection: "row" }}>
+                <Image style={styles.icon} source={ders_secim} />
+                <Text style={styles.btnText}> DERS SEÇİMİ</Text>
+              </View>
             </TouchableHighlight>
 
             <TouchableHighlight style={[styles.button, styles.buttonCall]} onPress={() => this.onClickListener('phone')}>
-              <Image style={styles.icon} source={{ uri: 'https://img.icons8.com/color/48/000000/facebook-like.png' }} />
+            <View style={{ flexDirection: "row" }}>
+                <Image style={styles.icon} source={dersler} />
+                <Text style={styles.btnText}> XXXXXX</Text>
+              </View>
             </TouchableHighlight>
           </View>
         </View>
@@ -91,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: '20%',
-    borderRadius: 5,
+    //borderRadius: 80,
     backgroundColor: 'rgba(178, 255, 249,0)',
     shadowColor: 'white',
     shadowOpacity: .2,
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     marginBottom: 10,
-    color: '#ffffff',
+    color: '#dbdbdb',
   },
   buttonContainer: {
     flex: 1,
@@ -122,7 +130,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 80,
     flexDirection: 'row',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
     borderRadius: 10,
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   buttonMessage: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "gray",
   },
   buttonLike: {
     backgroundColor: "#228B22",
@@ -147,8 +155,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#40E0D0",
   },
   icon: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
+    marginLeft:20,
+    marginRight:20
   },
   btnText: {
     color: '#ffffff',
