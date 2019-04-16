@@ -19,7 +19,7 @@ export default class ProfileComponent extends Component {
     return (
       <View style={styles.container}>
         {/* <Text>itemId: {JSON.stringify(itemId)}</Text> */}
-        <Text>ABC - {userInfo.login}</Text>
+        <Text>Deneme - {userInfo.login}</Text>
         <Image source={{uri: userInfo.avatar_url}} style={styles.image} /> 
       </View>
     )
