@@ -8,7 +8,8 @@ import {
     Image,
     TextInput,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 
 
@@ -33,34 +34,36 @@ export default class LoginComponent extends Component {
             showPass: true,
             press: false,
             TextInput_Username: '',
-            error:false
+            error: false,
+            showAnimation: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit() {
 
-        getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
-        .then((res) => {
-            if(res.message === 'Not Found') {
-              this.setState({
-                  error: 'Kullanıcı bulunamadı..'
-              });
-            }
-          else {
-            
-            this.props.navigation.navigate("Profile", {
-                itemId: 86,
-                userName: this.state.TextInput_Username,
-                authority: "student"
-            });
+        this.setState({showAnimation:true});
 
-            this.setState({
-              error: false,
-              TextInput_Username: ''
-            })
-          }
-      });
+        getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
+            .then((res) => {
+                if (res.message === 'Not Found') {
+                    this.setState({
+                        showAnimation: false,
+                        error: 'Kullanıcı bulunamadı..'
+                    });
+                }
+                else {
+
+                    this.props.navigation.navigate("Profile", {
+                        userInfo: res,
+                    });
+
+                    this.setState({
+                        error: false,
+                        TextInput_Username: ''
+                    })
+                }
+            });
     }
 
     showPass = () => {
@@ -75,11 +78,11 @@ export default class LoginComponent extends Component {
 
         let showErr = (
             this.state.error ?
-            <Text style={styles.errorText}>
-              {this.state.error}
-            </Text> :
-            <View></View>
-          );
+                <Text style={styles.errorText}>
+                    {this.state.error}
+                </Text> :
+                <View></View>
+        );
 
         return (
             <ImageBackground source={bgImage} style={styles.backgroundContainer}>
@@ -94,7 +97,7 @@ export default class LoginComponent extends Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={data => this.setState({ TextInput_Username: data })}
-                        placeholder={'Username'}
+                        placeholder={'Kullanıcı Adı'}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
                         underlineColorAndroid='transparent'
                     />
@@ -105,7 +108,7 @@ export default class LoginComponent extends Component {
                         style={styles.inputIcon} />
                     <TextInput
                         style={styles.input}
-                        placeholder={'Password'}
+                        placeholder={'Şifre'}
                         secureTextEntry={this.state.showPass}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
                         underlineColorAndroid='transparent'
@@ -117,10 +120,11 @@ export default class LoginComponent extends Component {
                     </TouchableOpacity>
                 </View>
                 <View>
-                <TouchableOpacity style={styles.btnLogin} onPress={this.handleSubmit}>
-                    <Text style={styles.text}>Login1</Text>
-                </TouchableOpacity>
-                {showErr}
+                    <TouchableOpacity style={styles.btnLogin} onPress={this.handleSubmit}>
+                        <Text style={styles.text}>Giriş</Text>
+                    </TouchableOpacity>
+                    {this.state.showAnimation && <ActivityIndicator style={styles.animation} size="large" color="white" />}
+                    {showErr}
                 </View>
             </ImageBackground>
         );
@@ -186,10 +190,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center'
     },
-    errorText:{
-        textAlign:'center',
-        fontSize:15,
-        color:'yellow',
+    errorText: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: 'white',
+        top: 15
+    },
+    animation:{
         top:15
     }
 });
