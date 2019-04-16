@@ -28,19 +28,21 @@ export default class LoginComponent extends Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
             showPass: true,
             press: false,
+            TextInput_Username: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit() {
 
-
                     this.props.navigation.navigate("Profile", {
-                        //itemId: 86,
-                        userInfo: "myaylali"//res
+                        itemId: 86,
+                        userName: this.state.TextInput_Username,
+                        authority: "student"
                     });
     }
 
@@ -65,6 +67,7 @@ export default class LoginComponent extends Component {
                         style={styles.inputIcon} />
                     <TextInput
                         style={styles.input}
+                        onChangeText={data => this.setState({ TextInput_Username: data })}
                         placeholder={'Username'}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
                         underlineColorAndroid='transparent'

@@ -13,14 +13,15 @@ export default class ProfileComponent extends Component {
 
     const { params } = this.props.navigation.state;
     const itemId = params ? params.itemId : null;
-    const otherParam = params ? params.otherParam : null;
-    const userInfo = params ? params.userInfo : null;
+    const userName = params ? params.userName : null;
+    const authority = params ? params.authority : null;
 
     return (
       <View style={styles.container}>
         {/* <Text>itemId: {JSON.stringify(itemId)}</Text> */}
-        <Text>Deneme - {userInfo.login}</Text>
-        <Image source={{uri: userInfo.avatar_url}} style={styles.image} /> 
+        <Text>{itemId} - {userName} </Text>
+        <Text>Yetki - {authority} </Text>
+        {/*<Image source={{uri: userInfo.avatar_url}} style={styles.image} />*/}
       </View>
     )
   }
