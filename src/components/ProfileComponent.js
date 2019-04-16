@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 
 export default class ProfileComponent extends Component {
+  
   render() {
-
+    
     const { params } = this.props.navigation.state;
     const itemId = params ? params.itemId : null;
     const userName = params ? params.userName : null;

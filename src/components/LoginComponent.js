@@ -33,17 +33,34 @@ export default class LoginComponent extends Component {
             showPass: true,
             press: false,
             TextInput_Username: '',
+            error:false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit() {
 
-                    this.props.navigation.navigate("Profile", {
-                        itemId: 86,
-                        userName: this.state.TextInput_Username,
-                        authority: "student"
-                    });
+        getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
+        .then((res) => {
+            if(res.message === 'Not Found') {
+              this.setState({
+                  error: 'Kullanıcı bulunamadı..'
+              });
+            }
+          else {
+            
+            this.props.navigation.navigate("Profile", {
+                itemId: 86,
+                userName: this.state.TextInput_Username,
+                authority: "student"
+            });
+
+            this.setState({
+              error: false,
+              TextInput_Username: ''
+            })
+          }
+      });
     }
 
     showPass = () => {
@@ -55,6 +72,15 @@ export default class LoginComponent extends Component {
     }
 
     render() {
+
+        let showErr = (
+            this.state.error ?
+            <Text style={styles.errorText}>
+              {this.state.error}
+            </Text> :
+            <View></View>
+          );
+
         return (
             <ImageBackground source={bgImage} style={styles.backgroundContainer}>
                 <View style={styles.logoContainer}>
@@ -90,11 +116,12 @@ export default class LoginComponent extends Component {
                             size={26} color={'rgba(255,255,255,0.7)'} />
                     </TouchableOpacity>
                 </View>
-
+                <View>
                 <TouchableOpacity style={styles.btnLogin} onPress={this.handleSubmit}>
                     <Text style={styles.text}>Login1</Text>
                 </TouchableOpacity>
-
+                {showErr}
+                </View>
             </ImageBackground>
         );
     }
@@ -158,5 +185,11 @@ const styles = StyleSheet.create({
         color: 'rgba(255,255,255,0.7)',
         fontSize: 16,
         textAlign: 'center'
+    },
+    errorText:{
+        textAlign:'center',
+        fontSize:15,
+        color:'yellow',
+        top:15
     }
 });
