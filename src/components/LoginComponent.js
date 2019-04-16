@@ -34,6 +34,7 @@ export default class LoginComponent extends Component {
             showPass: true,
             press: false,
             TextInput_Username: '',
+            TextInput_Password: '',
             error: false,
             showAnimation: false
         }
@@ -42,28 +43,47 @@ export default class LoginComponent extends Component {
 
     handleSubmit() {
 
-        this.setState({showAnimation:true});
+        if (this.state.TextInput_Username == '') {
+            this.setState({ error: 'Lütfen kullanıcı adını giriniz..' });
+        }
+        else if (this.state.TextInput_Password == '') {
+            this.setState({ error: 'Lütfen şifrenizi giriniz..' });
+        }
+        else {
+            this.setState({ showAnimation: true , error:false});
 
-        getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
-            .then((res) => {
-                if (res.message === 'Not Found') {
-                    this.setState({
-                        showAnimation: false,
-                        error: 'Kullanıcı bulunamadı..'
-                    });
-                }
-                else {
+            getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
+                .then((res) => {
+                    if (res.message === 'Not Found') {
+                        this.setState({
+                            showAnimation: false,
+                            error: 'Kullanıcı adı veya şifre hatalı !'
+                        });
+                    }
+                    else {
 
-                    this.props.navigation.navigate("Profile", {
-                        userInfo: res,
-                    });
+                        if (res.type == this.state.TextInput_Password) // !!! inputPasword == getPassword
+                        {
+                            this.props.navigation.navigate("Profile", {
+                                userInfo: res,
+                            });
 
-                    this.setState({
-                        error: false,
-                        TextInput_Username: ''
-                    })
-                }
-            });
+                            this.setState({
+                                error: false,
+                                TextInput_Username: '',
+                                TextInput_Password: ''
+                            })
+                        }
+                        else
+                        {
+                            this.setState({
+                                showAnimation: false,
+                                error: 'Kullanıcı adı veya şifre hatalı !'
+                            });
+                        }
+                    }
+                });
+        }
     }
 
     showPass = () => {
@@ -108,6 +128,7 @@ export default class LoginComponent extends Component {
                         style={styles.inputIcon} />
                     <TextInput
                         style={styles.input}
+                        onChangeText={data => this.setState({ TextInput_Password: data })}
                         placeholder={'Şifre'}
                         secureTextEntry={this.state.showPass}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
@@ -196,7 +217,7 @@ const styles = StyleSheet.create({
         color: 'white',
         top: 15
     },
-    animation:{
-        top:15
+    animation: {
+        top: 15
     }
 });

@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   },
   box: {
     marginTop: 10,
-    backgroundColor: 'white',
+    borderRadius:70,
+    backgroundColor: '#f2f3f4',
     alignItems: 'center',
     shadowColor: 'black',
     shadowOpacity: .2,
