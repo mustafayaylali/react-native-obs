@@ -1,5 +1,3 @@
-// DashboardComponent.js
-
 import React, { Component } from 'react';
 import {
   Text,
@@ -13,10 +11,10 @@ import {
   BackHandler
 } from 'react-native';
 
-import bgImage from '../../images/background_profile.jpg'
-import dersler from '../../images/dersler.png'
-import ders_secim from '../../images/ders_secim.png'
-import profil from '../../images/profil.png'
+import bgImage from '../images/background_profile.jpg'
+import dersler from '../images/dersler.png'
+import ders_secim from '../images/ders_secim.png'
+import profil from '../images/profil.png'
 
 export default class ProfileComponent extends Component {
 
@@ -31,7 +29,8 @@ export default class ProfileComponent extends Component {
   }
 
   onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed " + viewId);
+   // Alert.alert("Alert", "Button pressed " + viewId);
+   this.props.navigation.navigate("Lessons");
   }
 
   render() {
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
 
   button: {
     width: '100%',
-    height: 80,
+    height: 60,
     flexDirection: 'row',
     //justifyContent: 'center',
     alignItems: 'center',
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   buttonMessage: {
-    backgroundColor: "gray",
+    backgroundColor: "#2F95D6",
   },
   buttonLike: {
     backgroundColor: "#228B22",
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF1493",
   },
   buttonCall: {
-    backgroundColor: "#40E0D0",
+    backgroundColor: "gray",
   },
   icon: {
     width: 40,
@@ -162,8 +161,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: '#ffffff',
-    fontSize: 25,
+    fontSize: 20,
     fontFamily: 'Roboto',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop:5
   }
 });

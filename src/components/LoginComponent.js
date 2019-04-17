@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -13,8 +12,8 @@ import {
 } from 'react-native';
 
 
-import bgImage from '../../images/background.jpg'
-import logo from '../../images/logo.png'
+import bgImage from '../images/background.jpg'
+import logo from '../images/logo.png'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import { getUserInfo } from '../services/FetchUser';
