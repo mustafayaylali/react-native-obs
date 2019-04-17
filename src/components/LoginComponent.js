@@ -8,7 +8,8 @@ import {
     TextInput,
     Dimensions,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator,
+    AsyncStorage
 } from 'react-native';
 
 
@@ -29,10 +30,12 @@ export default class LoginComponent extends Component {
     constructor(props) {
         super(props)
 
+        //TOKEN TUTULMASI İÇİN ASYNC STORAGE KULLANILACAK
+
         this.state = {
             showPass: true,
             press: false,
-            TextInput_Username: 'myaylali', //ikiside boş olcak ''
+            TextInput_Username: 'myaylali', //test - prod ta :ikiside boş olcak ''
             TextInput_Password: 'User',
             error: false,
             showAnimation: false
@@ -61,17 +64,21 @@ export default class LoginComponent extends Component {
                     }
                     else {
 
-                        if (res.type == this.state.TextInput_Password) // !!! inputPasword == getPassword
+                        if (res.type == this.state.TextInput_Password) // LOGIN SUCCESS -  !!! inputPasword == getPassword
                         {
-                            this.props.navigation.navigate("Profile", {
-                                userInfo: res,
+                            this.props.navigation.navigate("Main", {
+                            userInfo: res,
                             });
 
+                            this.text_input_username.clear();
+                            this.text_input_password.clear();
                             this.setState({
                                 error: false,
+                                showAnimation:false,
                                 TextInput_Username: '',
                                 TextInput_Password: ''
                             })
+            
                         }
                         else
                         {
@@ -116,6 +123,7 @@ export default class LoginComponent extends Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={data => this.setState({ TextInput_Username: data })}
+                        ref={input => { this.text_input_username = input }}
                         placeholder={'Kullanıcı Adı'}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
                         underlineColorAndroid='transparent'
@@ -128,6 +136,7 @@ export default class LoginComponent extends Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={data => this.setState({ TextInput_Password: data })}
+                        ref={input=>{this.text_input_password=input}}
                         placeholder={'Şifre'}
                         secureTextEntry={this.state.showPass}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}

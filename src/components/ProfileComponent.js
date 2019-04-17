@@ -12,72 +12,33 @@ import {
 } from 'react-native';
 
 import bgImage from '../images/background_profile.jpg'
-import dersler from '../images/dersler.png'
-import ders_secim from '../images/ders_secim.png'
-import profil from '../images/profil.png'
+
 
 export default class ProfileComponent extends Component {
 
-  static navigationOptions = {
-    header: null
-  }
+    static navigationOptions = {
+        //header: null
+        title: 'Profilim',
+        headerTintColor: '#ffffff',
+        headerStyle: {
+            backgroundColor: '#369b00',
+            borderBottomColor: '#000000',
+            borderBottomWidth: 3,
+        },
+        headerTitleStyle: {
+            fontSize: 18,
+        },
+    }
 
-  componentDidMount() { //back button disable
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      return true;
-    });
-  }
-
-  onClickListener = (viewId) => {
-   // Alert.alert("Alert", "Button pressed " + viewId);
-   this.props.navigation.navigate("Lessons");
-  }
 
   render() {
 
-    const { params } = this.props.navigation.state;
-    const userInfo = params ? params.userInfo : null;
 
     return (
       <ImageBackground source={bgImage} style={styles.scrollContainer}>
 
         <View style={styles.container}>
-          <View style={styles.box}>
-            <Image style={styles.profileImage} source={{ uri: userInfo.avatar_url }} />
-            <Text style={styles.name}>{userInfo.login} - {userInfo.type}</Text>
-          </View>
-
-          <View style={styles.buttonContainer}>
-
-            <TouchableHighlight style={[styles.button, styles.buttonMessage]} onPress={() => this.onClickListener('message')}>
-              <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={dersler} />
-                <Text style={styles.btnText}> DERSLERİM</Text>
-              </View>
-            </TouchableHighlight>
-
-
-            <TouchableHighlight style={[styles.button, styles.buttonLike]} onPress={() => this.onClickListener('like')}>
-            <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={profil} />
-                <Text style={styles.btnText}> PROFİLİM</Text>
-              </View>
-            </TouchableHighlight>
-
-            <TouchableHighlight style={[styles.button, styles.buttonLove]} onPress={() => this.onClickListener('love')}>
-            <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={ders_secim} />
-                <Text style={styles.btnText}> DERS SEÇİMİ</Text>
-              </View>
-            </TouchableHighlight>
-
-            <TouchableHighlight style={[styles.button, styles.buttonCall]} onPress={() => this.onClickListener('phone')}>
-            <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={dersler} />
-                <Text style={styles.btnText}> XXXXXX</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
+          <Text>PROFİLİM</Text>
         </View>
 
       </ImageBackground>
@@ -156,14 +117,14 @@ const styles = StyleSheet.create({
   icon: {
     width: 40,
     height: 40,
-    marginLeft:20,
-    marginRight:20
+    marginLeft: 20,
+    marginRight: 20
   },
   btnText: {
     color: '#ffffff',
     fontSize: 20,
     fontFamily: 'Roboto',
     fontWeight: 'bold',
-    marginTop:5
+    marginTop: 5
   }
 });
