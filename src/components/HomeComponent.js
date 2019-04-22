@@ -35,10 +35,6 @@ export default class HomeComponent extends Component {
     else if (viewId == "cikis") {
       this.props.navigation.navigate("Home");
     }
-    else if(viewId=="profil"){
-      this.props.navigation.navigate("Profile");
-    }
-    // Alert.alert("Alert", "Button pressed " + viewId);
 
   }
 
@@ -66,7 +62,7 @@ export default class HomeComponent extends Component {
             </TouchableHighlight>
 
 
-            <TouchableHighlight style={[styles.button, styles.buttonLike]} onPress={() => this.onClickListener('profil')}>
+            <TouchableHighlight style={[styles.button, styles.buttonLike]} onPress={() => this.props.navigation.navigate("Profile", { userInfo2: userInfo, })}>
               <View style={{ flexDirection: "row" }}>
                 <Image style={styles.icon} source={profil} />
                 <Text style={styles.btnText}> PROFİLİM</Text>

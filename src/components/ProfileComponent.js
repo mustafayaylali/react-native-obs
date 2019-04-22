@@ -16,29 +16,34 @@ import bgImage from '../images/background_profile.jpg'
 
 export default class ProfileComponent extends Component {
 
-    static navigationOptions = {
-        //header: null
-        title: 'Profilim',
-        headerTintColor: '#ffffff',
-        headerStyle: {
-            backgroundColor: '#369b00',
-            borderBottomColor: '#000000',
-            borderBottomWidth: 3,
-        },
-        headerTitleStyle: {
-            fontSize: 18,
-        },
-    }
+  static navigationOptions = {
+    //header: null
+    title: 'Profilim',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: '#369b00',
+      borderBottomColor: '#000000',
+      borderBottomWidth: 3,
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
+  }
 
 
   render() {
 
+    const { params } = this.props.navigation.state;
+    const userInfo = params ? params.userInfo2 : null;
 
     return (
       <ImageBackground source={bgImage} style={styles.scrollContainer}>
 
         <View style={styles.container}>
-          <Text>PROFİLİM</Text>
+          <View style={styles.box}>
+            <Image style={styles.profileImage} source={{ uri: userInfo.avatar_url }} />
+            <Text style={styles.name}>{userInfo.login} - {userInfo.type}</Text>
+          </View>
         </View>
 
       </ImageBackground>
