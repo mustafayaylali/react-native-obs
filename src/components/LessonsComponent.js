@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, ImageBackground, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, ImageBackground, AsyncStorage,TouchableOpacity } from 'react-native';
 import bgImage from '../images/background_profile.jpg'
 import { getLessonInfo } from '../services/FetchLesson.js'
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 
 const formatData = (data, numColumns) => {
@@ -47,7 +48,7 @@ export default class LessonsComponent extends Component {
         getLessonInfo(userInfo.data._id, this.state.userTypeState).then((res) => { //5cd6c53fef922200115bfdce
             for (var i = 0; i < res.length; i++) {
                 if (this.state.userTypeState === "teacher") {
-                    lessons.push({ key: res[i].name }); //teacher= res[i].name  student=res[i].lessonInfo.name
+                    lessons.push({ key: res[i].name,lessonId: res[i].id,teacherId:res[i].teacherId}); //teacher= res[i].name  student=res[i].lessonInfo.name
                 } else {
                     for (var j = 0; j < res[i].lessonPoints.length; j++) {
                         if (res[i].lessonPoints[j].point === null) res[i].lessonPoints[j].point = "Girilmedi";
@@ -80,32 +81,28 @@ export default class LessonsComponent extends Component {
         },
     }
 
-
+    _onPress = (itemLessonId,itemTeacherId) => {
+        this.props.navigation.navigate("StudentList", { lessonId2: itemLessonId,teacherId2:itemTeacherId });
+     };
 
     renderItem = ({ item, index }) => {
         if (item.empty === true) {
             return <View style={[styles.item, styles.itemInvisible]} />;
         }
         return (
-            <ImageBackground source={bgImage} style={styles.item}>
+       
+            <TouchableOpacity  style={styles.item}  onPress={() => this.state.userTypeState === 'teacher' && this._onPress(item.lessonId,item.teacherId)}>
                 <Text style={styles.itemText}>{item.key}</Text>
                 {this.state.userTypeState === 'student' ?
                     <Text style={styles.itemText2}>{item.pointName} : {item.point}</Text>
                     : null
                 }
-            </ImageBackground>
+            </TouchableOpacity>
         );
     };
 
 
     render() {
-
-        /*
-        const { params } = this.props.navigation.state;
-        const userInfo = params ? params.userInfo2 : null; //ogrenci id  yollamak için
-        //console.error(userInfo.data._id);
-        this.setState({userIdState:userInfo.data._id});   
-        */
 
         return (
 
@@ -115,6 +112,7 @@ export default class LessonsComponent extends Component {
                 renderItem={this.renderItem}
                 numColumns={numColumns}
             />
+           
 
         );
     }
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     item: {
-        backgroundColor: '#4D243D',
+        backgroundColor: '#437743',
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,

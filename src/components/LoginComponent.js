@@ -123,8 +123,9 @@ export default class LoginComponent extends Component {
                     onValueChange={(itemValue, itemIndex) =>
                         this.setState({ userType: itemValue })
                     }>
-                    <Picker.Item label="Öğrenci" value="student" />
+                    
                     <Picker.Item label="Öğretmen" value="teacher" />
+                    <Picker.Item label="Öğrenci" value="student" />
                 </Picker>
 
                 <View style={styles.inputContainer}>

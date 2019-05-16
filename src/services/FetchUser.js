@@ -13,7 +13,7 @@ export const getUserLoginInfo = (username,password,userType) => {
             'Content-Type': 'application/json',
           },
         body: JSON.stringify({
-            username: '260',//username,   // 260    //mumtaz.hocaoglu@gmail.com 123456
+            username: 'mumtaz.hocaoglu@gmail.com',//username,   // 260    //mumtaz.hocaoglu@gmail.com 123456
             password: '123456'//password, //123456
         }),
     }).then((res) => res.json());
