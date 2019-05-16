@@ -4,18 +4,16 @@ import {
   View,
   StyleSheet,
   Image,
-  Alert,
-  ScrollView,
   ImageBackground,
   TouchableHighlight,
   BackHandler,
-  AsyncStorage
 } from 'react-native';
 
 import bgImage from '../images/background_profile.jpg'
 import dersler from '../images/dersler.png'
 import ders_secim from '../images/ders_secim.png'
 import profil from '../images/profil.png'
+import logout from '../images/logout.png'
 
 export default class HomeComponent extends Component {
 
@@ -41,11 +39,8 @@ export default class HomeComponent extends Component {
 
   render() {
 
-
     const { params } = this.props.navigation.state;
     var userInfo = params ? params.userInfo : null;
-
-    var src;
 
     return (
 
@@ -63,7 +58,7 @@ export default class HomeComponent extends Component {
 
           <View style={styles.buttonContainer}>
 
-            <TouchableHighlight style={[styles.button, styles.buttonMessage]} onPress={() => this.onClickListener('ders')}>
+            <TouchableHighlight style={[styles.button, styles.buttonMessage]} onPress={() => this.props.navigation.navigate("Lessons", { userInfo2: userInfo, })}>
               <View style={{ flexDirection: "row" }}>
                 <Image style={styles.icon} source={dersler} />
                 <Text style={styles.btnText}> DERSLERİM</Text>
@@ -87,7 +82,7 @@ export default class HomeComponent extends Component {
 
             <TouchableHighlight style={[styles.button, styles.buttonCall]} onPress={() => this.onClickListener('cikis')}>
               <View style={{ flexDirection: "row" }}>
-                <Image style={styles.icon} source={dersler} />
+                <Image style={styles.icon} source={logout} />
                 <Text style={styles.btnText}> ÇIKIŞ</Text>
               </View>
             </TouchableHighlight>

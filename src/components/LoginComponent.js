@@ -9,7 +9,8 @@ import {
     Dimensions,
     TouchableOpacity,
     ActivityIndicator,
-    Picker
+    Picker,
+    AsyncStorage
 } from 'react-native';
 
 
@@ -26,6 +27,16 @@ export default class LoginComponent extends Component {
     static navigationOptions = {
         header: null
     }
+    
+    async saveKey(value) {
+        try {
+          await AsyncStorage.setItem('@UserTypeStore:key', value);
+        } catch (error) {
+          console.log("Error saving data" + error);
+        }
+      }
+      
+      
 
     constructor(props) {
         super(props)
@@ -68,6 +79,8 @@ export default class LoginComponent extends Component {
                         TextInput_Username: '',
                         TextInput_Password: ''
                     })
+
+                    this.saveKey(this.state.userType);
                 }
                 else {
                     this.setState({
