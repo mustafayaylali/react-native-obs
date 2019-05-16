@@ -17,7 +17,7 @@ import bgImage from '../images/background.jpg'
 import logo from '../images/logo.png'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { getUserInfo, getUserLoginInfo } from '../services/FetchUser';
+import { getUserLoginInfo } from '../services/FetchUser';
 
 const { width: WIDTH } = Dimensions.get('window')
 
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     selectBox:{
          height: 50, 
-         width: 150,
+         width: 140,
          color:'white',
          marginTop: 10
     }
