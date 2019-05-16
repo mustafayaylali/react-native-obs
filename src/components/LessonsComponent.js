@@ -16,7 +16,7 @@ const formatData = (data, numColumns) => {
     return data;
 };
 
-const numColumns = 1;
+const numColumns = 2;
 
 export default class LessonsComponent extends Component {
 
@@ -46,7 +46,15 @@ export default class LessonsComponent extends Component {
         const lessons = [];
         getLessonInfo(userInfo.data._id, this.state.userTypeState).then((res) => { //5cd6c53fef922200115bfdce
             for (var i = 0; i < res.length; i++) {
-                lessons.push({ key: res[i].name }); //teacher= res[i].name  student=res[i].lessonInfo.name
+                if (this.state.userTypeState === "teacher") {
+                    lessons.push({ key: res[i].name }); //teacher= res[i].name  student=res[i].lessonInfo.name
+                } else {
+                    for (var j = 0; j < res[i].lessonPoints.length; j++) {
+                        if (res[i].lessonPoints[j].point === null) res[i].lessonPoints[j].point = "Girilmedi";
+                        lessons.push({ key: res[i].lessonInfo.name, pointName: res[i].lessonPoints[j].name, point: res[i].lessonPoints[j].point });
+                    }
+
+                }
                 this.setState({ lessonsState: lessons });
             }
         });
@@ -81,8 +89,10 @@ export default class LessonsComponent extends Component {
         return (
             <ImageBackground source={bgImage} style={styles.item}>
                 <Text style={styles.itemText}>{item.key}</Text>
-                <Text style={styles.itemText2}>1.Sınav : 55</Text>
-                <Text style={styles.itemText2}>2.Sınav : 70 </Text>
+                {this.state.userTypeState === 'student' ?
+                    <Text style={styles.itemText2}>{item.pointName} : {item.point}</Text>
+                    : null
+                }
             </ImageBackground>
         );
     };
@@ -133,6 +143,6 @@ const styles = StyleSheet.create({
     itemText2: {
         color: '#fff',
         fontSize: 15,
-        marginBottom: 3
+        marginBottom: 3,
     },
 });
