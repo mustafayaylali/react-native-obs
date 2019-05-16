@@ -8,7 +8,8 @@ import {
   ScrollView,
   ImageBackground,
   TouchableHighlight,
-  BackHandler
+  BackHandler,
+  AsyncStorage
 } from 'react-native';
 
 import bgImage from '../images/background_profile.jpg'
@@ -40,16 +41,24 @@ export default class HomeComponent extends Component {
 
   render() {
 
+
     const { params } = this.props.navigation.state;
-    const userInfo = params ? params.userInfo : null;
+    var userInfo = params ? params.userInfo : null;
+
+    var src;
 
     return (
+
       <ImageBackground source={bgImage} style={styles.scrollContainer}>
 
         <View style={styles.container}>
           <View style={styles.box}>
-            <Image style={styles.profileImage} source={{ uri: userInfo.avatar_url }} />
-            <Text style={styles.name}>{userInfo.login} - {userInfo.type}</Text>
+            {userInfo.data.name==='Ahmet' ?
+              <Image style={styles.profileImage} source={require('../images/ahmet.jpg')} />
+            :
+              <Image style={styles.profileImage} source={require('../images/ismail.jpg')} />
+            }
+            <Text style={styles.name}> {userInfo.data.studentNo}  {userInfo.data.name} {userInfo.data.surname}</Text>
           </View>
 
           <View style={styles.buttonContainer}>

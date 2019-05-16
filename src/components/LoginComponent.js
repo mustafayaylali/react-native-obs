@@ -9,7 +9,7 @@ import {
     Dimensions,
     TouchableOpacity,
     ActivityIndicator,
-    AsyncStorage
+    Picker
 } from 'react-native';
 
 
@@ -17,7 +17,7 @@ import bgImage from '../images/background.jpg'
 import logo from '../images/logo.png'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { getUserInfo } from '../services/FetchUser';
+import { getUserInfo, getUserLoginInfo } from '../services/FetchUser';
 
 const { width: WIDTH } = Dimensions.get('window')
 
@@ -35,10 +35,9 @@ export default class LoginComponent extends Component {
         this.state = {
             showPass: true,
             press: false,
-            TextInput_Username: 'myaylali', //test - prod ta :ikiside boş olcak ''
-            TextInput_Password: 'User',
             error: false,
-            showAnimation: false
+            showAnimation: false,
+            userType:'student'
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -52,43 +51,32 @@ export default class LoginComponent extends Component {
             this.setState({ error: 'Lütfen şifrenizi giriniz..' });
         }
         else {
-            this.setState({ showAnimation: true , error:false});
+            this.setState({ showAnimation: true, error: false });
 
-            getUserInfo(this.state.TextInput_Username)//this.state.TextInput_Username
-                .then((res) => {
-                    if (res.message === 'Not Found') {
-                        this.setState({
-                            showAnimation: false,
-                            error: 'Kullanıcı adı veya şifre hatalı !'
-                        });
-                    }
-                    else {
+            getUserLoginInfo(this.state.TextInput_Username, this.state.TextInput_Password,this.state.userType).then((res) => {
 
-                        if (res.type == this.state.TextInput_Password) // LOGIN SUCCESS -  !!! inputPasword == getPassword
-                        {
-                            this.props.navigation.navigate("Main", {
-                            userInfo: res,
-                            });
+                if (res.errorCode === 0) {
 
-                            this.text_input_username.clear();
-                            this.text_input_password.clear();
-                            this.setState({
-                                error: false,
-                                showAnimation:false,
-                                TextInput_Username: '',
-                                TextInput_Password: ''
-                            })
-            
-                        }
-                        else
-                        {
-                            this.setState({
-                                showAnimation: false,
-                                error: 'Kullanıcı adı veya şifre hatalı !'
-                            });
-                        }
-                    }
-                });
+                    this.props.navigation.navigate("Main", {
+                        userInfo: res,
+                    });
+                    this.text_input_username.clear();
+                    this.text_input_password.clear();
+                    this.setState({
+                        error: false,
+                        showAnimation: false,
+                        TextInput_Username: '',
+                        TextInput_Password: ''
+                    })
+                }
+                else {
+                    this.setState({
+                        showAnimation: false,
+                        error: 'Kullanıcı adı veya şifre hatalı !'
+                    });
+                }
+
+            });
         }
     }
 
@@ -116,6 +104,15 @@ export default class LoginComponent extends Component {
                     <Image source={logo} style={styles.logo} />
                     <Text style={styles.logoText}>ÖĞRENCİ BİLGİ SİSTEMİ</Text>
                 </View>
+                <Picker
+                    selectedValue={this.state.userType}
+                    style={styles.selectBox}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ userType: itemValue })
+                    }>
+                    <Picker.Item label="Öğrenci" value="student" />
+                    <Picker.Item label="Öğretmen" value="teacher" />
+                </Picker>
 
                 <View style={styles.inputContainer}>
                     <Icon name={'ios-person'} size={28} color={'rgba(255,255,255,0.7)'}
@@ -136,7 +133,7 @@ export default class LoginComponent extends Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={data => this.setState({ TextInput_Password: data })}
-                        ref={input=>{this.text_input_password=input}}
+                        ref={input => { this.text_input_password = input }}
                         placeholder={'Şifre'}
                         secureTextEntry={this.state.showPass}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
@@ -227,5 +224,11 @@ const styles = StyleSheet.create({
     },
     animation: {
         top: 15
+    },
+    selectBox:{
+         height: 50, 
+         width: 150,
+         color:'white',
+         marginTop: 10
     }
 });
